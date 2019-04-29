@@ -1,18 +1,20 @@
 ---
 # tasks file for minions
-- name: Reset Kubernetes
-  shell: kubeadm reset -f
-  register: kubeadm_reset
+- name: install k3s
+  shell: |
+    wget https://github.com/rancher/k3s/releases/download/{{ k3s_version }}/k3s-armhf && \
+    chmod +x k3s-armhf && \
+    sudo mv k3s-armhf /usr/local/bin/k3s
 
-- name: Join Kubernetes Cluster
-  shell: kubeadm join --ignore-preflight-errors=all --token {{ token }} {{ groups['master'][0] }}:6443 --discovery-token-unsafe-skip-ca-verification
-  when: kubeadm_reset is succeeded
-  register: kubeadm_join
+- name: put startup script
+  template:
+    src: rc.local.j2
+    dest: /etc/rc.local
+    owner: root
+    group: root
+    mode: 0755
+  vars:
+    target: "{{ https_master }}"
+    token: "{{ k3s_token }}"
 
-- name: Poke kubelet
-  systemd:
-    name: kubelet
-    state: restarted
-    daemon_reload: yes
-    enabled: yes
-  register: kubelet_poke
+# TODO reboot
