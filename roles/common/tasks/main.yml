@@ -64,6 +64,12 @@
   apt:
     upgrade: full
 
+- name: install k3s
+  shell: |
+    wget https://github.com/rancher/k3s/releases/download/{{ k3s_version }}/k3s-armhf && \
+    chmod +x k3s-armhf && \
+    sudo mv k3s-armhf /usr/local/bin/k3s
+
 - name: Reboot
   shell: sleep 2 && shutdown -r now "Ansible Reboot"
   async: 1
