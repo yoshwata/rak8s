@@ -1,6 +1,0 @@
-k3s_version: "<REPLACE_ME>"
-
-https_master: "https://<REPLACE_ME>:6443"
-
-k3s_token: "<REPLACE_ME>"
-

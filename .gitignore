@@ -3,3 +3,5 @@
 .cp/*
 .pubkey
 *.backup
+group_vars/all.yml
+inventory

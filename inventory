@@ -1,7 +1,0 @@
-[dev]
-pi001   ansible_host=<REPLACE_ME>
-pi002   ansible_host=<REPLACE_ME>
-pi003   ansible_host=<REPLACE_ME>
-
-[master]
-pi001
